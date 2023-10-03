@@ -1,0 +1,172 @@
+html {
+    background: rgba(50, 50, 50, 1);
+}
+body {
+    margin: 0px;
+}
+
+.centerGradient {
+    background: radial-gradient(201.29% 206.01% at 50% 50%, #608DFF 0%, rgba(242, 92, 173, 0.54) 38.01%, rgba(0, 0, 0, 0.00) 100%, rgba(0, 0, 0, 0.00) 100%);
+}
+.centerCircle {
+    background: radial-gradient(27% 38% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    animation: circle 1s infinite alternate-reverse;
+}
+@keyframes circle {
+    from {
+        background: radial-gradient(27% 38% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    10% {
+        background: radial-gradient(27.5% 38.5% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    20% {
+        background: radial-gradient(28% 39% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    30% {
+        background: radial-gradient(28.5% 39.5% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    40% {
+        background: radial-gradient(29% 40% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    50% {
+        background: radial-gradient(29.5% 40.5% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    60% {
+        background: radial-gradient(30% 41% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    70% {
+        background: radial-gradient(30.5% 41.5% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    80% {
+        background: radial-gradient(31% 42% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    90% {
+        background: radial-gradient(31.5% 42.5% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+    }
+    to {
+        background: radial-gradient(32% 43% at 50% 50%, #608DFF 10%, rgba(242, 92, 173, 0.54) 115%, rgba(50, 50, 50, 1) 140%);
+
+    }
+}
+
+.centerBlock {
+    align-items: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: Koh Santepheap;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.40);
+}
+
+.centerBlock p {
+    font-size: 52px;
+    margin: 0px;
+}
+
+.centerBlock lable {
+    font-size: 32px;
+    display: flex;
+    width: 100%;
+}
+
+.centerBlock button {
+    display: inline-block;
+    margin: 50px;
+    margin-bottom: 0px;
+    border-radius: 100px;
+    border: none;
+    padding: 20px 55px 20px 55px;
+    cursor: pointer;
+    color: #FFF;
+    text-align: center;
+    font-family: Karla;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.registrationButton:hover {
+    box-shadow: 0 0 30px #F164B1;
+}
+
+.guestButton:hover {
+    box-shadow: 0 0 30px #323232;
+}
+
+.registrationButton {
+    background: #F164B1;
+}
+
+.guestButton {
+    background: #323232;
+}
+
+.rightText {
+    color: #8E8E8E;
+    text-align: right;
+    margin-right: 30px;
+    font-family: Karla;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.leftText {
+    color: #8E8E8E;
+    text-align: left;
+    margin-right: 30px;
+    font-family: Karla;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.authorizationBlock {
+    padding: 20px 50px 70px 50px;
+    border-radius: 100px;
+    background: rgba(25, 25, 25, 0.60);
+}
+
+.authorizationBlock input {
+    width: 100%;
+    margin: 25px 25px 25px 0;
+    padding: 10px;
+    border: none;
+    display: flex;
+    border-radius: 100px;
+    background: #D9D9D9;
+    color: #6B6B6B;
+    font-family: Karla;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.authorizationBlock button {
+    width: 100%;
+    background: #F164B1;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.authorizationBlock label {
+    text-shadow: none;
+    margin-top: 65px;
+    color: #888888;
+    text-align: center;
+    font-family: Karla;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

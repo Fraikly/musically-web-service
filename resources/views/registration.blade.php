@@ -11,19 +11,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Домашняя страница</title>
+    <title>Регистрация</title>
 
 </head>
-<body class="centerCircle">
-<div class="rightText">
-    Войти в систему
-</div>
+<body class="centerGradient">
 <div class="centerBlock">
-<p>Добро пожаловать</p>
-<lable>для начала подбора песен создайте аккаунт или продолжите как гость</lable>
 
-    <button class="registrationButton">Создать аккаунт</button>
-    <button class="guestButton">Войти как гость</button>
+
+
+    <div class="authorizationBlock">
+        <p>Регистрация</p>
+
+        <input type="text" required placeholder="Введите логин">
+        <input type="text" required placeholder="Введите электронную почту">
+        <input type="password" required placeholder="Введите пароль">
+        <input type="password" required placeholder="Повторите пароль">
+
+        <button>Создать аккаунт</button>
+        <label>У вас уже есть аккаунт? Водите</label>
+    </div>
+</div>
 </div>
 </body>
 </html>
