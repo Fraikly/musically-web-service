@@ -25,6 +25,7 @@ class HomeController extends Controller
     {
 //        return view('log_in');
 //        return view('registration');
-        return view('home');
+//        return view('home');
+        return view('main');
     }
 }
