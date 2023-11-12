@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\SearchSongsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,5 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/songs/search', [SearchSongsController::class, 'search']);
+Route::get('/home', [HomeController::class, 'index']);
+
+Route::middleware('auth')->group(function (){
+
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/', [MainController::class, 'index']);
+});

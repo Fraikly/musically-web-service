@@ -1,6 +1,9 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" href="{{ url('favicon.png') }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/backgrounds.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,16 +17,42 @@
     <title>Домашняя страница</title>
 
 </head>
-<body class="centerCircle">
-<div class="rightText">
-    Войти в систему
-</div>
-<div class="centerBlock">
-<p>Добро пожаловать</p>
-<lable>для начала подбора песен создайте аккаунт или продолжите как гость</lable>
+<body class="upCircle">
+@csrf
 
-    <button class="registrationButton">Создать аккаунт</button>
-    <button class="guestButton">Войти как гость</button>
+<div class="rightText" id="3" style="color: black; display: none">
+    Выйти
+</div>
+<div class="centerBlock" style="top: 30%">
+<p>Начнем поиски</p>
+<lable>найдите понравившуюся вам песню или получите случайную</lable>
+
 </div>
 </body>
 </html>
+
+<script>
+    $(document).ready ( function(){
+        if (localStorage.getItem('token')) {
+            $('#3').css('display','block');
+        }
+    });
+
+    $('#3').click(function(){
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: 'api/auth/logout',
+            type: "DELETE",
+            dataType: 'json',
+            headers: {"Authorization": "Bearer " + localStorage.getItem('token'),
+                'X-CSRF-TOKEN': token},
+            success: function (data) {
+                localStorage.removeItem('token');
+                window.location.href = '/';
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>

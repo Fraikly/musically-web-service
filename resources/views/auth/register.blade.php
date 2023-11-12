@@ -1,77 +1,77 @@
-@extends('layouts.app')
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="{{ url('favicon.png') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/backgrounds.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+    <title>Регистрация</title>
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+</head>
+<body class="centerGradient">
+<div class="centerBlock">
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="login" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+    <div class="authorizationBlock">
+        <p>Регистрация</p>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+        <form method="post" id="handleAjax" name="postform">
+            @csrf
+        <input type="text" required placeholder="Введите логин" name="login">
+            <span class="text-danger"  id="login"></span>
+        <input type="text" required placeholder="Введите электронную почту" name="email">
+            <span class="text-danger"  id="email"></span>
+        <input type="password" required placeholder="Введите пароль" name="password">
+            <span class="text-danger"  id="password"></span>
+        <input type="password" required placeholder="Повторите пароль" name="password_confirmation">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <button type="submit">Создать аккаунт</button>
+        <label>У вас уже есть аккаунт? <a href="{{route('login')}}">Водите</a> </label>
+        </form>
     </div>
 </div>
-@endsection
+</div>
+</body>
+</html>
+
+<script>
+    $(document).on("submit", "#handleAjax", function() {
+        var e = this;
+
+        $(this).find("[type='submit']").html("Подождите...");
+
+        $.ajax({
+            url: '/api/auth/register',
+            data: $(this).serialize(),
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                localStorage.setItem('token', data.token);
+                window.location.href = '/home';
+            },
+            error: function (data) {
+                    $('#email').text('');
+                    $('#login').text('');
+                    $('#password').text('');
+                    $('#password_confirmation').text('');
+                    $.each(data.responseJSON.errors, function (key, val) {
+                        $('#' + key).text(val);
+                    });
+
+                $(this).find("[type='submit']").html("Создать аккаунт");
+
+            }
+        });
+        return false;
+    });
+</script>

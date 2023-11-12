@@ -125,6 +125,7 @@ body {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    cursor:pointer;
 }
 
 .leftText {
@@ -139,7 +140,7 @@ body {
 }
 
 .authorizationBlock {
-    padding: 20px 50px 70px 50px;
+    padding: 20px 50px 50px 50px;
     border-radius: 100px;
     background: rgba(25, 25, 25, 0.60);
 }

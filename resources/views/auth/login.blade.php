@@ -1,73 +1,76 @@
-@extends('layouts.app')
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="{{ url('favicon.png') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/backgrounds.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <title>Вход в систему</title>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+</head>
+<body class="centerGradient">
+<div class="centerBlock">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    <div class="authorizationBlock">
+        <form method="post" id="handleAjax" name="postform">
+            @csrf
+            <p>Вход в систему</p>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+            <input type="text" required placeholder="Введите электронную почту" name="email">
+                <span class="text-danger"  id="email"></span>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+            <input type="password" required placeholder="Введите пароль" name="password">
+                <span class="text-danger password"  id="password"></span>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            <button type="submit">Войти</button>
+            <label>Еще нет аккаунта? <a href="/register"> Зарегистрируйтесь </a> </label>
+        </form>
     </div>
 </div>
-@endsection
+</div>
+</body>
+</html>
+
+<script>
+    $(document).on("submit", "#handleAjax", function() {
+        var e = this;
+
+        $(this).find("[type='submit']").html("Подождите...");
+
+        $.ajax({
+            url: '/api/auth/login',
+            data: $(this).serialize(),
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                localStorage.setItem('token', data.token);
+                window.location.href = '/home';
+            },
+            error: function (data) {
+                if (data.status === 401) {
+                    $('#email').text('Проверьте правильность написания логина и пароля');
+                } else if (data.status === 404) {
+                    $('#email').text('Пользователь с такой почтой не найден');
+                } else {
+                    $('#email').text('');
+                    $('#password').text('');
+                    $.each(data.responseJSON.errors, function (key, val) {
+                        $('#' + key).text(val);
+                    });
+                }
+            }
+        });
+
+        return false;
+    });
+</script>
