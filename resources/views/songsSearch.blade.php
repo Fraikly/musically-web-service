@@ -1,82 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<link rel="icon" href="{{ url('favicon.png') }}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<div id="songs">
-    @foreach($tracks as $track)
-        <div id="{{$track['track']['key']}}">
-            <br>
-            <img src="{{$track['track']['images']['coverart']}}">
-            <p>{{$track['track']['title']}}</p>
-            <p>{{$track['track']['subtitle']}}</p>
-            <audio controls="controls">
-                <source src="{{$track['track']['hub']['actions'][1]['uri']}}" type="audio/mp3" controls="false"/>
-            </audio>
-            <button value="{{$track['track']['key']}}" onclick="getSim(this.value)">Найти похожие</button>
-        </div>
-    @endforeach
-</div>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Поиск</title>
+
+    <link rel="stylesheet" href="{{ url('css/searchSongs.css') }}">
+</head>
+<body>
+<main class="main search-page">
+    <span class="burger">=</span>
+    <nav class="nav">
+        <ul class="nav__links">
+            <li class="nav__text">Для полного функционала
+                войдите в аккаунт</li>
+            <li class="nav__link"><a href="#">Создать аккаунт</a></li>
+            <li class="nav__link"><a href="#">Войти</a></li>
+
+            <li class="nav__text_other">Прочее:</li>
+            <li class="nav__link"><a href="#">Справка</a></li>
+        </ul>
+    </nav>
+
+    <div class="search-page__content">
+        <header class="search-page__header">
+            <div class="search-page__input">
+                <input type="text" id="search">
+                <img src="{{ url('image/loop.png') }}" alt="Loop" style="cursor:pointer" id="loop">
+            </div>
+
+            <span class="search-page__results-num" id="result">Результаты поиска:</span>
+        </header>
+
+        <ul class="search-page__list" id="list">
+        </ul>
+    </div>
+</main>
 
 <script>
-    const audioList = document.querySelectorAll('audio')
-    let currentAudio
-    var ids = [];
-    var count = 0;
-
-    Array.prototype.forEach.call(audioList, audio => {
-        audio.addEventListener('play', e => {
-            if (currentAudio) currentAudio.pause()
-            currentAudio = e.target
-        })
+    let menuBtn = document.querySelector('.burger');
+    let menu = document.querySelector('.nav');
+    menuBtn.addEventListener('click', function(){
+        menu.classList.toggle('active');
     })
 
-    function deleteSong(songId) {
-        ids.push(songId);
-        $('#' + songId).empty();
+    function getSim(songId) {
+        window.location.href = '/get_similarities?songId=' + songId;
     }
 
-    function getSim(songId) {
-        if(count === 0 ) {
-            ids.push(songId);
-            $('#songs').empty();
-            count = 1;
-        } else {
-            deleteSong(songId);
-        }
-
-        $('#songs').append("<h2 id='wait'> Ищем для вас песни... </h2>")
+    $('#loop').click(function(){
 
         $.ajax({
-            type: 'GET',
-            url: 'http://127.0.0.1:8000/api/get_similarities?songId=' + songId,
+            url: '/api/search?name=' + $('#search').val(),
+            type: "GET",
             dataType: 'json',
             success: function (data) {
+                $('#list').empty();
+                $('#result').text("Результаты поиска: " + data.length);
+
                 $.each(data, function (index, obj) {
-                    if (!ids.includes(parseInt(obj['id']))) {
-                        var songs = $(" <div id=" + obj['id'] + ">")
-                        songs.append("<br><img src=" + obj['image'] + ">");
-                        songs.append("<p>" + obj['title'] + "</p>");
-                        songs.append("<p>" + obj['artist'] + "</p>");
-                        songs.append("<audio controls='controls'> <source src=" + obj['url'] + " type='audio/mp3' controls='false'/>");
-                        songs.append("</audio>");
-                        songs.append("<button value=" + obj['id'] + " onclick='getSim(this.value)'>Найти похожие</button>");
-                        songs.append("<button value=" + obj['id'] + " onclick='deleteSong(this.value)'>Мне не нравится</button>");
-                        songs.append("</div>");
-
-                        $('#songs').append(songs);
-                        $('#wait').empty();
-
-                    }
+                    obj = obj['track']
+                    console.log(obj);
+                        var songs = $("<li class='search-page__item'>");
+                        songs.append("<div class='list-item_left'> <img src=" + obj['images']['coverart'] + "></div>");
+                        songs.append("<div class='list-item_right'>" +
+                            "<span class='list-item__title'>" + obj['title'] + "</span>" +
+                            "<span class='list-item__artist'>" + obj['subtitle'] + "</span>" +
+                            "<audio controls='controls' class='list-item__controls'> <source src=" + obj['hub']['actions'][1]['uri'] + " type='audio/mp3' controls='false'/>" +
+                            "</audio>" +
+                            "<button class='list-item__btn' value=" + obj['key'] + " onclick='getSim(this.value)'>Найти похожие</button>" +
+                            "</div>");
+                        songs.append("</li>");
+                        $('#list').append(songs);
                 });
+
             },
             error: function (data) {
                 console.log(data);
+
             }
         });
-    }
 
-
-
-
+    })
 </script>
-
+</body>
+</html>

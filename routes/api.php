@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SearchSongsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SimilarSongsController;
@@ -28,6 +29,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 });
 
 
+Route::get('/search', [SearchSongsController::class, 'search']);
 Route::get('/get_similarities', [SimilarSongsController::class, 'index']);
 
 
