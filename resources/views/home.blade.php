@@ -22,10 +22,6 @@
 <body class="upCircle">
 @csrf
 @include('layouts.burger')
-
-<div class="rightText" id="3" style="color: black; display: none">
-    Выйти
-</div>
 <div class="centerBlock" style="top: 30%">
 <p>Начнем поиски</p>
 <lable>найдите понравившуюся вам песню или получите случайную</lable>
@@ -51,21 +47,5 @@
         window.location.href = '/search?name=' + $('#search').val();
     });
 
-    $('#3').click(function(){
-        var token = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-            url: 'api/auth/logout',
-            type: "DELETE",
-            dataType: 'json',
-            headers: {"Authorization": "Bearer " + localStorage.getItem('token'),
-                'X-CSRF-TOKEN': token},
-            success: function (data) {
-                localStorage.removeItem('token');
-                window.location.href = '/';
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    });
+
 </script>

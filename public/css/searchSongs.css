@@ -171,7 +171,13 @@ main {
 }
 
 body {
-    background-color: #608DFF;
+    /*background-color: #608DFF;*/
+    background: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1612928007_5-p-krasnii-muzika-fon-5.jpg")
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .main {
     position: relative;
@@ -289,8 +295,9 @@ body {
     gap: 25px;
 
     width: 100%;
-
-    padding: 0 20px;
+    background: #291e24;
+    padding: 50px;
+    /*padding: 0 20px;*/
 }
 .search-page__item {
     display: flex;

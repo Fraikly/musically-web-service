@@ -22,7 +22,7 @@
                 <img src="{{ url('image/loop.png') }}" alt="Loop" style="cursor:pointer" id="loop">
             </div>
 
-            <span class="search-page__results-num" id="result">Результаты поиска:</span>
+            <span class="search-page__results-num" id="result">Результаты поиска: {{count($tracks)}}</span>
         </header>
 
         <ul class="search-page__list" id="list">
@@ -42,13 +42,8 @@
 </main>
 
 <script>
-    let menuBtn = document.querySelector('.burger');
-    let menu = document.querySelector('.nav');
-    menuBtn.addEventListener('click', function(){
-        menu.classList.toggle('active');
-    })
-
     function getSim(songId) {
+        console.log("a")
         window.location.href = '/get_similarities?songId=' + songId;
     }
 
