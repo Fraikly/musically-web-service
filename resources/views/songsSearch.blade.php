@@ -14,23 +14,11 @@
 </head>
 <body>
 <main class="main search-page">
-    <span class="burger">=</span>
-    <nav class="nav">
-        <ul class="nav__links">
-            <li class="nav__text">Для полного функционала
-                войдите в аккаунт</li>
-            <li class="nav__link"><a href="#">Создать аккаунт</a></li>
-            <li class="nav__link"><a href="#">Войти</a></li>
-
-            <li class="nav__text_other">Прочее:</li>
-            <li class="nav__link"><a href="#">Справка</a></li>
-        </ul>
-    </nav>
-
+    @include('layouts.burger')
     <div class="search-page__content">
         <header class="search-page__header">
             <div class="search-page__input">
-                <input type="text" id="search">
+                <input type="text" id="search" value="{{$search}}">
                 <img src="{{ url('image/loop.png') }}" alt="Loop" style="cursor:pointer" id="loop">
             </div>
 
@@ -38,6 +26,17 @@
         </header>
 
         <ul class="search-page__list" id="list">
+            @foreach($tracks as $track):
+            <li class='search-page__item'>
+                <div class='list-item_left'> <img src="{{$track['track']['images']['coverart']}}"></div>
+                <div class='list-item_right'>
+                    <span class='list-item__title'>{{$track['track']['title']}}</span>
+                    <span class='list-item__artist'>{{$track['track']['subtitle']}}</span>
+                    <audio controls='controls' class='list-item__controls'> <source src="{{$track['track']['hub']['actions'][1]['uri']}}" type='audio/mp3' controls='false'/>
+                    </audio>
+                    <button class='list-item__btn' value="{{ $track['track']['key']}}" onclick='getSim(this.value)'>Найти похожие</button>
+                </div>
+            @endforeach
         </ul>
     </div>
 </main>

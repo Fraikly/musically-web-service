@@ -215,16 +215,19 @@ body {
 }
 .nav__text {
     font-size: 24px;
-    color: #8e8e8e;
+    color: white;
 }
 .nav__link {
     font-size: 24px;
     margin-top: 12px;
 }
+.nav__link a{
+    color: #cdcdcd;
+}
 .nav__text_other {
     margin-top: 150px;
     font-size: 24px;
-    color: #8e8e8e;
+    color: white;
 }
 .nav.active {
     transform: translateX(0);
