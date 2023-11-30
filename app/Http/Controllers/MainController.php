@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 class MainController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the main page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */

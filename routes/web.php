@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\SimilarSongsController;
+use App\Http\Controllers\SimilarSongsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\SearchSongsController;
@@ -18,14 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
-Route::get('/search', SearchSongsController::class);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/', [MainController::class, 'index']);
+});
 Route::get('/home', [HomeController::class, 'index']);
+
+Route::get('/search', SearchSongsController::class);
 Route::get('/get_similarities', SimilarSongsController::class);
 
 Route::middleware('auth')->group(function (){
 
 });
 
-Route::middleware('guest')->group(function () {
-    Route::get('/', [MainController::class, 'index']);
-});
+

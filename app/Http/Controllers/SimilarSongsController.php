@@ -9,12 +9,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Traits\Shazamable;
 
-class SearchSongsController extends Controller
+class SimilarSongsController extends Controller
 {
     use Shazamable;
 
     /**
-     * Show the songs list
+     * Show the similar songs list
      *
      * @param Request $request
      * @return Application|Factory|View|\Illuminate\Foundation\Application
@@ -22,16 +22,9 @@ class SearchSongsController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $search = '';
+        $id = $request->songId;
+        $tracks = $this->getSimilarTracksFromShazam($id);
 
-        if ($request->name) {
-            $search = $request->name;
-            $songName = str_replace(' ', '%20', $search);
-            $tracks = $this->getTracksFromShazam($songName);
-        } else {
-            $tracks = [];
-        }
-
-        return view('songsSearch', compact('tracks', 'search'));
+       return view('songsSimilar', compact('tracks'));
     }
 }
