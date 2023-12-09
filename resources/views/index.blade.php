@@ -22,8 +22,8 @@
     Войти в систему
 </div>
 <div class="centerBlock">
-<p>Добро пожаловать</p>
-<lable>для начала подбора песен создайте аккаунт или продолжите как гость</lable>
+    <p>Добро пожаловать</p>
+    <lable>для начала подбора песен создайте аккаунт или продолжите как гость</lable>
 
     <button class="registrationButton" id="1">Создать аккаунт</button>
     <button class="guestButton" id="2">Войти как гость</button>
@@ -31,13 +31,13 @@
 </body>
 </html>
 <script>
-    $('#1').click(function(){
-        window.location.href='/register';
+    $('#1').click(function () {
+        window.location.href = '/register';
     })
-    $('#2').click(function(){
-        window.location.href='/home';
+    $('#2').click(function () {
+        window.location.href = '/home';
     })
-    $('#3').click(function(){
-        window.location.href='/login';
+    $('#3').click(function () {
+        window.location.href = '/login';
     })
 </script>

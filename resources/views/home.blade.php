@@ -23,8 +23,8 @@
 @csrf
 @include('layouts.burger')
 <div class="centerBlock" style="top: 30%">
-<p>Начнем поиски</p>
-<lable>найдите понравившуюся вам песню или получите случайную</lable>
+    <p>Начнем поиски</p>
+    <lable>найдите понравившуюся вам песню или получите случайную</lable>
     <div class="search-page__input">
         <input type="text" id="search">
         <img src="{{ url('image/loop.png') }}" alt="Loop" style="cursor:pointer" id="loop">
@@ -35,15 +35,13 @@
 </html>
 
 <script>
-
-
-    $(document).ready ( function(){
+    $(document).ready(function () {
         if (localStorage.getItem('token')) {
-            $('#3').css('display','block');
+            $('#3').css('display', 'block');
         }
     });
 
-    $('#loop').click(function(){
+    $('#loop').click(function () {
         window.location.href = '/search?name=' + $('#search').val();
     });
 
